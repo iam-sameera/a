@@ -28,9 +28,11 @@ jobs:
             });
             
             let content = Buffer.from(data.content, 'base64').toString();
-            content = content.replace('name: Sameera', 'name: Dissanayaka');
-            
             fs.writeFileSync('sam.md', content);
+      
+      - name: Replace name using sed
+        run: |
+          sed -i 's/name: Sameera/name: Dissanayaka/' sam.md
       
       - name: Commit and Push Changes to repo B
         run: |

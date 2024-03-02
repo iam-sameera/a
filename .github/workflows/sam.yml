@@ -22,6 +22,8 @@ jobs:
         cd b
         sed -i 's/name:abc/name:xyz/g' sam.md
         cat sam.md
+        git config --global user.email "devopssameera@gmail.com"
+        git config --global user.name "Sameera Dissanayaka"
         git add sam.md
         git commit -m "Update sam.md"
 

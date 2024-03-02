@@ -13,16 +13,18 @@ jobs:
     - name: Checkout code from Repo B
       uses: actions/checkout@v2
       with:
-        repository: iam-sameera/b # Specify the username and repository name of Repo B
-        ref: main  # Adjust the branch name as needed
+        repository: iam-sameera/b  # Repository B
 
     - name: Update Sam's Name
       run: |
         sed -i 's/name:Sameera/name:Dissanayaka/g' sam.md
 
     - name: Commit and Push changes to Repo B
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.PAT }}
-        branch: main  # Adjust the branch name as needed
-        repository: iam-sameera/b  # Specify the username and repository name of Repo B
+      env:
+        PAT: ${{ secrets.PAT }}  # Use the personal access token stored in repository A's secrets
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "GitHub Actions"
+        git add .
+        git commit -m "Update Sam's name"
+        git push https://${{ secrets.PAT }}@github.com/iam-sameera/b.git main

@@ -15,9 +15,18 @@ jobs:
           repository: iam-sameera/b
           path: sam.md
 
+      - name: Verify sam.md file
+        run: |
+          ls -l sam.md
+
       - name: Replace name using sed
         run: |
-          sed -i 's/name: Sameera/name: Dissanayaka/' sam.md
+          if [ -f "sam.md" ]; then
+            sed -i 's/name: Sameera/name: Dissanayaka/' sam.md
+          else
+            echo "sam.md file not found"
+            exit 1
+          fi
 
       - name: Commit and Push Changes
         run: |

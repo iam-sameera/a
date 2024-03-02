@@ -20,6 +20,7 @@ jobs:
     - name: Access cloned repository content
       run: |
         cd b
+        sed -i 's/name:abc/name:xyz/g' sam.md
         cat sam.md
 
             

@@ -23,8 +23,8 @@ jobs:
       env:
         PAT: ${{ secrets.PAT }}  # Use the personal access token stored in repository A's secrets
       run: |
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "GitHub Actions"
+        git config --global user.email "devopssameera@gmail.com"
+        git config --global user.name "Sameera Dissanayaka"
         git add .
         git commit -m "Update Sam's name"
         git push https://${{ secrets.PAT }}@github.com/iam-sameera/b.git main

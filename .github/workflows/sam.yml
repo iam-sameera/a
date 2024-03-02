@@ -21,22 +21,28 @@ jobs:
           github-token: ${{ secrets.PAT }}
           script: |
             const fs = require('fs');
+            const fetch = require('node-fetch'); // Import node-fetch
             const { Octokit } = require('@octokit/rest');
-            const octokit = new Octokit({ auth: process.env.github_token });
-            
+            const octokit = new Octokit({
+              auth: process.env.github_token,
+              request: {
+                fetch, // Pass fetch implementation
+              },
+            });
+
             const { data } = await octokit.repos.getContent({
               owner: 'iam-sameera',
               repo: 'b',
               path: 'sam.md'
             });
-            
+
             let content = Buffer.from(data.content, 'base64').toString();
             fs.writeFileSync('sam.md', content);
-      
+
       - name: Replace name using sed
         run: |
           sed -i 's/name: Sameera/name: Dissanayaka/' sam.md
-      
+
       - name: Commit and Push Changes to repo B
         run: |
           git config --global user.email "github-actions@github.com"

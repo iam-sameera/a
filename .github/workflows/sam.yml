@@ -10,20 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repo B
-      uses: actions/checkout@v2
+    - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
+      uses: GuillaumeFalourd/clone-github-repo-action@v2.3
       with:
-        repository: iam-sameera/b
-        token: ${{ secrets.PAT }}
-
-    - name: Update sam.md
+        depth: 1
+        branch: 'main'
+        owner: 'iam-sameera'
+        repository: 'b'  
+    - name: Access cloned repository content
       run: |
-        sed -i 's/name:abc/name:xyz/g' sam.md
+        cd b
+        cat sam.md
 
-    - name: Commit and push changes
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "Update sam.md"
-        git push
+            

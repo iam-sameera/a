@@ -9,44 +9,20 @@ jobs:
   update_name:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo A
+      - name: Fetch Sam's File
         uses: actions/checkout@v2
-
-      - name: Install @octokit/rest module
-        run: npm install @octokit/rest isomorphic-fetch
-
-      - name: Fetch Sam's File from repo B
-        uses: actions/github-script@v4
         with:
-          github-token: ${{ secrets.PAT }}
-          script: |
-            const fs = require('fs');
-            const fetch = require('isomorphic-fetch'); // Import isomorphic-fetch
-            const { Octokit } = require('@octokit/rest');
-            const octokit = new Octokit({
-              auth: process.env.github_token,
-              request: {
-                fetch, // Pass fetch implementation
-              },
-            });
-
-            const { data } = await octokit.repos.getContent({
-              owner: 'iam-sameera',
-              repo: 'b',
-              path: 'sam.md'
-            });
-
-            let content = Buffer.from(data.content, 'base64').toString();
-            fs.writeFileSync('sam.md', content);
+          repository: iam-sameera/b
+          path: sam.md
 
       - name: Replace name using sed
         run: |
           sed -i 's/name: Sameera/name: Dissanayaka/' sam.md
 
-      - name: Commit and Push Changes to repo B
+      - name: Commit and Push Changes
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
           git add sam.md
           git commit -m "Update Sam's name to Dissanayaka"
-          git push origin main
+          git push

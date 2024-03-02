@@ -1,4 +1,4 @@
-name: Update Sam's Name
+name: Update Sam.md
 
 on:
   push:
@@ -6,32 +6,24 @@ on:
       - main
 
 jobs:
-  update_name:
+  update-file:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Fetch Sam's File
-        uses: actions/checkout@v2
-        with:
-          repository: iam-sameera/b
-          path: sam.md
+    - name: Checkout Repo B
+      uses: actions/checkout@v2
+      with:
+        repository: iam-sameera/b
+        token: ${{ secrets.PAT }}
 
-      - name: Verify sam.md file
-        run: |
-          ls -l sam.md
+    - name: Update sam.md
+      run: |
+        sed -i 's/name:abc/name:xyz/g' sam.md
 
-      - name: Replace name using sed
-        run: |
-          if [ -f "sam.md" ]; then
-            sed -i 's/name: Sameera/name: Dissanayaka/' sam.md
-          else
-            echo "sam.md file not found"
-            exit 1
-          fi
-
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add sam.md
-          git commit -m "Update Sam's name to Dissanayaka"
-          git push
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Update sam.md"
+        git push

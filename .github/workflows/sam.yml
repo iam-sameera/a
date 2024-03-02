@@ -22,14 +22,15 @@ jobs:
         cd b
         sed -i 's/name:abc/name:xyz/g' sam.md
         cat sam.md
-    - name: Commit changes
-      run: |
-        git config user.email "action@github.com"
-        git config user.name "GitHub Action"
+        git config user.email "devopssameera@gmail.com"
+        git config user.name "Sameera Dissanayaka"
         git add .
         git commit -m "Update sam.md"
+        git remote set-url origin https://iam-sameera:${{ secrets.PAT }}@github.com/iam-sameera/b.git
+        git push
+        
 
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.PAT }}
+        
+        
+
+

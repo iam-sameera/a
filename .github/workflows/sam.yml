@@ -3,29 +3,39 @@ name: Update Sam's Name
 on:
   push:
     branches:
-      - main  # Adjust the branch name as needed
+      - main
 
 jobs:
   update_name:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code from Repo B
-      uses: actions/checkout@v2
-      with:
-        repository: iam-sameera/b  # Repository B
-
-    - name: Update Sam's Name
-      run: |
-        sed -i 's/name:Sameera/name:Dissanayaka/g' sam.md
-
-    - name: Commit and Push changes to Repo B
-      uses: cpina/github-action-push-to-another-repository@main
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.PAT }}  # Use the personal access token stored in repository A's secrets
-      with:
-        source-directory: 'b'
-        destination-github-username:  'iam-sameera'
-        destination-repository-name:  'b'
-        user-email: devopssameera@gmail.com
-        target-branch: main      
+      - name: Checkout repo A
+        uses: actions/checkout@v2
+      
+      - name: Fetch Sam's File from repo B
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.PAT }}
+          script: |
+            const fs = require('fs');
+            const { Octokit } = require('@octokit/rest');
+            const octokit = new Octokit({ auth: process.env.github_token });
+            
+            const { data } = await octokit.repos.getContent({
+              owner: 'iam-sameera',
+              repo: 'b',
+              path: 'sam.md'
+            });
+            
+            let content = Buffer.from(data.content, 'base64').toString();
+            content = content.replace('name: Sameera', 'name: Dissanayaka');
+            
+            fs.writeFileSync('sam.md', content);
+      
+      - name: Commit and Push Changes to repo B
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add sam.md
+          git commit -m "Update Sam's name to Dissanayaka"
+          git push origin main

@@ -24,8 +24,8 @@ jobs:
         cat sam.md
     - name: Commit changes
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
+        git config user.email "action@github.com"
+        git config user.name "GitHub Action"
         git add .
         git commit -m "Update sam.md"
 

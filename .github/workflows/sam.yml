@@ -22,6 +22,8 @@ jobs:
         cd b
         sed -i 's/name:abc/name:xyz/g' sam.md
         cat sam.md
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
         git add .
         git commit -m "Update sam.md"
         

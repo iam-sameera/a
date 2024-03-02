@@ -11,7 +11,10 @@ jobs:
     steps:
       - name: Checkout repo A
         uses: actions/checkout@v2
-      
+
+      - name: Install @octokit/rest module
+        run: npm install @octokit/rest
+
       - name: Fetch Sam's File from repo B
         uses: actions/github-script@v4
         with:

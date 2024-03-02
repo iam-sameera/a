@@ -1,0 +1,28 @@
+name: Update Sam's Name
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch name as needed
+
+jobs:
+  update_name:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code from Repo B
+      uses: actions/checkout@v2
+      with:
+        repository: iam-sameera/b # Specify the username and repository name of Repo B
+        ref: main  # Adjust the branch name as needed
+
+    - name: Update Sam's Name
+      run: |
+        sed -i 's/name:Sameera/name:Dissanayaka/g' sam.md
+
+    - name: Commit and Push changes to Repo B
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.PAT }}
+        branch: main  # Adjust the branch name as needed
+        repository: iam-sameera/b  # Specify the username and repository name of Repo B

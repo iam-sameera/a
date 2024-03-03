@@ -32,4 +32,5 @@ jobs:
          pwd
          cd b
          ls
+         git status
          

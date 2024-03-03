@@ -29,8 +29,8 @@ jobs:
         git commit -m "Update sam.md"
     -  name:  Push to repo b
        run: |
-         pwd
          cd b
-         ls
-         git status
+         git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/iam-sameera/b
+         git push
+
          

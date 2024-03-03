@@ -30,7 +30,7 @@ jobs:
     -  name:  Push to repo b
        run: |
          cd b
-         git remote set-url origin https://x-access-token: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@github.com/iam-sameera/b.git
+         git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/iam-sameera/b.git
          git push
 
          

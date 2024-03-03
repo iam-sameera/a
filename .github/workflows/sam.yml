@@ -26,10 +26,7 @@ jobs:
         git config --global user.name "Sameera Dissanayaka"
         git add sam.md
         git commit -m "Update sam.md"
-    - name: Push
-      run: |
-        git remote set-url origin https://x-access-token:${{ secrets.PAT  }}@github.com/${{ b }}
-        git push    
+
 
 
         

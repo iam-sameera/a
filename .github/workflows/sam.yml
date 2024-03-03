@@ -17,6 +17,7 @@ jobs:
         branch: 'main'
         owner: 'iam-sameera'
         repository: 'b'  
+
     - name: Access cloned repository content
       run: |
         cd b
@@ -30,13 +31,4 @@ jobs:
     - name: Push
       run: |
         git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ b }}
-        git push        
-
-
-
-        
-
-        
-        
-
-
+        git push
